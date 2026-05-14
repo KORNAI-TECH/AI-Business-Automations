@@ -94,4 +94,5 @@ python bot.py
 
 ---
 **Developer:** Nothingtham
+
 📫 **Reach me at:** [Telegram: @AlexeiKornienko](https://t.me/AlexeiKornienko)
