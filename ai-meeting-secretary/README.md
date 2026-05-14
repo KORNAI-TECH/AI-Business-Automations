@@ -93,5 +93,5 @@ python bot.py
 *   **Отказоустойчивость**: Система автоматического переключения между нейросетями при сбоях (Gemini <-> Groq).
 
 ---
-👨‍💻 **Developer:** Nothingtham
+👨‍💻 **Developer:** Nothingtham <br>
 📬 **Reach me at:** [Telegram: @AlexeiKornienko](https://t.me/AlexeiKornienko)
