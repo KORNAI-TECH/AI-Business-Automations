@@ -114,24 +114,31 @@ def normalize_spacing(text):
 def add_styled_para(doc, line):
     line = line.strip()
     if not line:
-        doc.add_paragraph(); return
+        doc.add_paragraph()
+        return
     p = doc.add_paragraph()
-    p.paragraph_format.space_after = Pt(0); p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.space_before = Pt(0)
 
     if any(emoji in line for emoji in ["🗓", "📂", "👥", "📝", "💡", "✅", "🎤"]) or "Дата:" in line:
-        run = p.add_run(line); run.bold = True; run.font.size = Pt(13)
+        run = p.add_run(line)
+        run.bold = True
+        run.font.size = Pt(13)
         p.paragraph_format.space_before = Pt(12)
     elif ":" in line and len(line.split(":")[0]) < 45:
         parts = line.split(":", 1)
-        run_name = p.add_run(f"{parts[0].strip()}: "); run_name.bold = True
-        if len(parts) > 1: p.add_run(parts[1])
+        run_name = p.add_run(f"{parts[0].strip()}: ")
+        run_name.bold = True
+        if len(parts) > 1:
+            p.add_run(parts[1])
     else:
         p.add_run(line)
 
 def create_docx(report_text, filename):
     doc = Document()
     style = doc.styles['Normal']
-    style.font.name = 'Arial'; style.font.size = Pt(11)
+    style.font.name = 'Arial'
+    style.font.size = Pt(11)
 
     parts = report_text.split("[SPLIT]")
     # 1. Чат
@@ -163,7 +170,8 @@ async def handle_audio(message: types.Message, state: FSMContext):
 
         raw_text = await transcribe_audio(audio_path)
         if not raw_text:
-            await status_msg.edit_text("❌ Ошибка расшифровки."); return
+            await status_msg.edit_text("❌ Ошибка расшифровки.")
+            return
 
         final_report, engine = await analyze_and_diarize(raw_text)
 
@@ -180,14 +188,16 @@ async def handle_audio(message: types.Message, state: FSMContext):
     except Exception as e:
         await message.answer(f"⚠️ Ошибка: {e}")
     finally:
-        if os.path.exists(audio_path): os.remove(audio_path)
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
 
 @dp.callback_query(F.data == "get_word")
 async def send_file(callback: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     report = data.get("report")
     if not report:
-        await callback.answer("Данные не найдены.", show_alert=True); return
+        await callback.answer("Данные не найдены.", show_alert=True)
+        return
 
     filename = f"Protocol_{datetime.now().strftime('%H%M%S')}.docx"
     try:
@@ -196,7 +206,8 @@ async def send_file(callback: types.CallbackQuery, state: FSMContext):
         await callback.answer()
     finally:
         await asyncio.sleep(10)
-        if os.path.exists(filename): os.remove(filename)
+        if os.path.exists(filename):
+            os.remove(filename)
 
 async def main():
     await dp.start_polling(bot, skip_updates=True)
@@ -204,7 +215,11 @@ async def main():
 def run_dummy_server():
     from http.server import HTTPServer, BaseHTTPRequestHandler
     class Handler(BaseHTTPRequestHandler):
-        def do_GET(self): self.send_response(200); self.end_headers(); self.wfile.write(b"OK")
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"OK")
+
     port = int(os.environ.get("PORT", 8080))
     HTTPServer(('0.0.0.0', port), Handler).serve_forever()
 
