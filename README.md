@@ -54,7 +54,7 @@ To ensure the safety of proprietary data and prevent API key leakage, all projec
 
 ---
 
-👨‍💻 **Developer:** Nothingtham <br>
+👨‍💻 **Developer:** Alexei Kornienko <br>
 📬 **Reach me at:** [Telegram: @AlexeiKornienko](https://t.me/AlexeiKornienko)
 
 ---
